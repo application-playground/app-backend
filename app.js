@@ -20,6 +20,14 @@ app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use((request, response, next) => {
+    response.header('Access-Control-Allow-Origin', '*');
+    response.header('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+    response.header('Content-Type', 'application/json; charset=utf-8');
+    next();
+});
+ 
+
 app.get('/favicon.ico', (req, res) => { res.sendStatus(204); });
 app.get('/', (req, res) => { res.json({ "tutorial": "Build REST API with node.js" }); });
 
