@@ -8,13 +8,25 @@ module.exports = {
         userModel.create({ name: req.body.name, email: req.body.email, password: passwordHash }, function (err, result) {
             if (err)
                 next(err);
-            else
-                res.json({ status: "success", message: "User added successfully!!!", data: null });
-
+            else {
+                if (result !== null) {
+                    res.json({
+                        status: true
+                        , message: "Registration successfully!!"
+                        , user: { email: result.email, name: result.name }
+                    });                    
+                } else {
+                    res.json({
+                        status: false
+                        , message: "Please contact administrator!!"
+                        , user: { email: req.body.email, name: req.body.name }
+                    });
+                }
+            }
         });
     },
     authenticate: function (req, res, next) {
-        console.log(req.body);
+        console.log(req.body);        
         userModel.findOne({ email: req.body.email }, (err, userInfo) => {
             if (err) {
                 next(err);
