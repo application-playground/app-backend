@@ -14,21 +14,29 @@ module.exports = {
         });
     },
     authenticate: function (req, res, next) {
+        console.log(req.body);
         userModel.findOne({ email: req.body.email }, (err, userInfo) => {
             if (err) {
                 next(err);
             } else {
                 
                 //validPassword = false;
-                bcrypt.compare(req.body.password, userInfo.password, (err, result) => {
+                if (userInfo !== null) {
 
-                    if (result) {
-                        const token = jwt.sign({ id: userInfo }, req.app.get('secretKey'), { expiresIn: '1h' });
-                        res.json({ status: "success", message: "user found!!!", data: { user: userInfo, token: token } });
-                    } else {
-                        res.json({ status: "error", message: "Invalid email/password!!!", data: null });
-                    }
-                });
+                    bcrypt.compare(req.body.password, userInfo.password, (err, result) => {
+                        if (result) {
+                            const token = jwt.sign({ id: userInfo }, req.app.get('secretKey'), { expiresIn: '1h' });
+                            res.json({ status: true
+                                , token: token
+                                , message: "Login successfully."
+                                , user: { email: userInfo.email, name: userInfo.name }
+                            });
+                        }
+                    });
+                    
+                } else {
+                    res.json({ status: false, token: null, message: "Invalid login.", user: { email: req.body.email } });
+                }
             }
         });
     },

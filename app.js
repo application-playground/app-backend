@@ -13,7 +13,7 @@ app.set('secretKey', 'nodeRestApi'); // jwt secret token
 const mongoose = require('./config/database'); //database 
 mongoose.connection.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
-// app.use(express.json());
+app.use(express.json());
 // app.use(express.urlencoded({ extended: false }));
 app.use(logger('dev'));
 app.use(cookieParser());
