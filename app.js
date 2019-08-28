@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const jwt = require('jsonwebtoken');
 const cookieParser = require('cookie-parser');
 const path = require('path');
+const cors = require('cors');
 
 const app = express();
 const port = process.env.PORT || 4100;
@@ -20,13 +21,24 @@ app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use((request, response, next) => {
-    response.header('Access-Control-Allow-Origin', '*');
-    response.header('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
-    response.header('Content-Type', 'application/json; charset=utf-8');
-    next();
-});
- 
+var originsWhitelist = ['http://localhost:4000'];
+var corsOptions = {
+    origin: function (origin, callback) {
+        var isWhitelisted = originsWhitelist.indexOf(origin) !== -1;
+        callback(null, isWhitelisted);
+    },
+    credentials:true
+}
+
+//here is the magic
+app.use(cors(corsOptions));
+
+// app.use((request, response, next) => {
+//     response.header('Access-Control-Allow-Origin', 'http://localhost:4000');
+//     response.header('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+//     response.header('Content-Type', 'application/json; charset=utf-8');
+//     next();
+// });
 
 app.get('/favicon.ico', (req, res) => { res.sendStatus(204); });
 app.get('/', (req, res) => { res.json({ "tutorial": "Build REST API with node.js" }); });
