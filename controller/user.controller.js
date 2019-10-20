@@ -85,14 +85,14 @@ module.exports = {
         var size = parseInt(req.query.pageSize)
 
         var query = {}
-        if (pageNo < 0 || pageNo === 0) {
+        if (pageNo < 0) {
             response = {
                 "error": true,
                 "message": "invalid page number, should start with 1"
             };
             return res.json(response)
         }
-        query.skip = size * (pageNo - 1)
+        query.skip = size * (pageNo)
         query.limit = size
         // Find some documents
         userModel.count({}, function (err, totalCount) {
