@@ -6,6 +6,8 @@ const userController = require('./../controller/user.controller');
 router.post('/register', userController.create);
 router.post('/authenticate', userController.authenticate);
 router.get('/list', userController.list);
+router.get('/exportCSV', userController.exportCSV);
+
 
 module.exports = router;
 
