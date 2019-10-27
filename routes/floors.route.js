@@ -1,11 +1,11 @@
 var express = require('express');
 var router = express.Router();
 
-const blockMasterController = require('../controller/BlockMaster.controller');
+const floorsController = require('../controller/floors.controller');
 
-router.post('/create', blockMasterController.create);
-router.get('/list', blockMasterController.list);
-router.get('/exportCSV', blockMasterController.exportCSV);
+// router.post('/create', blockMasterController.create);
+router.get('/list', floorsController.list);
+// router.get('/exportCSV', blockMasterController.exportCSV);
 
 
 module.exports = router;

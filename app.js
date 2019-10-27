@@ -46,12 +46,14 @@ app.get('/', (req, res) => { res.json({ "tutorial": "Build REST API with node.js
 const indexRoute = require('./routes/index');
 const moviesRoute = require('./routes/movies.route');
 const usersRoute = require('./routes/users');
-const blockRoute = require('./routes/blockMaster.route');
+const blocksRoute = require('./routes/blocks.route');
+const floorsRoute = require('./routes/floors.route');
 
 // public route
 app.use('/index', indexRoute);
 app.use('/users', usersRoute);
-// app.use('/block', blockRoute);
+app.use('/block', blocksRoute);
+app.use('/floor', floorsRoute);
 
 // private route
 app.use('/movies', validateUser, moviesRoute);

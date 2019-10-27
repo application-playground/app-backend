@@ -16,4 +16,4 @@ blockMasterSchema.pre('save', (next) => {
     next();
 });
 
-module.exports = mongoose.model('blockMaster', blockMasterSchema);
+module.exports = mongoose.model('blocks', blockMasterSchema);
